@@ -2,14 +2,16 @@
 import pandas as pd
 import os
 
-RAW_DATA_PATH = 'data/raw/ndemographic.csv'
+RAW_DATA_PATH = 'data/raw/demographic.csv'
 CLEANED_DATA_PATH = 'data/cleaned/demographic_cleaned.csv'
 
 def clean_data(df):
-    # Example cleaning steps (more can be added as needed)
-    df.dropna(subset=['Age', 'Gender', 'BMI', 'Income'], inplace=True)
-    df['Gender'] = df['Gender'].str.capitalize()
-    df = df[(df['BMI'] > 10) & (df['BMI'] < 60)]  # BMI range filtering as an example
+    # Example cleaning steps
+    df.dropna(subset=['RIDAGEYR', 'RIAGENDR', 'WTINT2YR', 'WTMEC2YR'], inplace=True)
+    df['WTINT2YR'] = pd.to_numeric(df['WTINT2YR'], errors='coerce')
+    df['WTINT2YR'] = df['WTINT2YR'].round(2)
+    df['WTMEC2YR'] = pd.to_numeric(df['WTMEC2YR'], errors='coerce')
+    df['WTMEC2YR'] = df['WTMEC2YR'].round(2)
     return df
 
 def main():
